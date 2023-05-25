@@ -1,52 +1,60 @@
 import React, { useState, ChangeEvent } from 'react'
-import DataService from '../services/DataService'
-import { IList } from '../types/interfaces'
+import { useParams } from 'react-router-dom'
 
-const AddList: React.FC = () => {
-	const initialListState = {
+import DataService from '../services/DataService'
+import { IItem } from '../types/interfaces'
+
+const AddItem: React.FC = () => {
+	const { id }= useParams();
+	const initialItemState = {
 		id: null,
 		name: ''
 	}
 
-	const [list, setList] = useState<IList>(initialListState)
+	const [item, setItem] = useState<IItem>(initialItemState)
 	const [submitted, setSubmitted] = useState<boolean>(false)
+	const [error, setError] = useState<boolean>(false)
 
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target
-		setList({ ...list, [name]: value })
+		setItem({ ...item, [name]: value })
 	}
 
-	const saveList = () => {
+	const saveItem = () => {
 		const data = {
-			name: list.name
+			name: item.name
 		}
-
-		DataService.createList(data)
+		if (id) {
+			DataService.createItem(id, data)
 			.then((response: any) => {
-				setList({
+				setItem({
 					id: response.data.id,
 					name: response.data.name
 				})
 				setSubmitted(true)
+				setError(false)
 				console.log(response.data)
 			})
 			.catch((e: Error) => {
 				console.log(e)
+				setError(true)
 			})
+		}
 	}
 
-	const newList = () => {
-		setList(initialListState)
+	const newItem = () => {
+		setItem(initialItemState)
 		setSubmitted(false)
+		setError(false)
 	}
 
 	return (
 		<div className="submit-form">
 			{submitted ? (
 				<div>
-					<h4>List created successfully!</h4>
-					<button className="btn btn-success" onClick={newList}>
-            Add
+					<h4>Item created successfully!</h4>
+					<button className="btn btn-success" onClick={newItem}>
+            			Add
 					</button>
 				</div>
 			) : (
@@ -58,19 +66,25 @@ const AddList: React.FC = () => {
 							className="form-control"
 							id="name"
 							required
-							value={list.name}
+							value={item.name}
 							onChange={handleInputChange}
 							name="name"
 						/>
 					</div>
 
-					<button onClick={saveList} className="btn btn-success">
+					<button onClick={saveItem} className="btn btn-success">
 						Submit
 					</button>
 				</div>
 			)}
+			{error ? (
+				<p className='mx-auto mt-2'>
+					Error or duplicate item
+				</p>
+			) : (<p></p>)}
 		</div>
+
 	)
 }
 
-export default AddList
+export default AddItem

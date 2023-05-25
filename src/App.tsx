@@ -1,11 +1,13 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AddList from "./components/AddList";
 import List from "./components/List";
 import Lists from "./components/Lists";
+import AddList from "./components/AddList";
+import AddItem from "./components/AddItem";
 
 const App: React.FC = () => {
   return (
@@ -34,6 +36,7 @@ const App: React.FC = () => {
           <Route path="/lists" element={<Lists/>} />
           <Route path="/add" element={<AddList/>} />
           <Route path="/lists/:id" element={<List/>} />
+          <Route path="/lists/:id/add-item" element={<AddItem/>} />
         </Routes>
       </div>
     </div>

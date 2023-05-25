@@ -88,17 +88,23 @@ const Lists: React.FC = () => {
             >
               Add item
             </Link>
-            <h5>Items:</h5>
+            <h5 className="mt-2">Items:</h5>
               <ul className="list-group">
                 {currentList.items &&
                   currentList.items.map((item, index) => (
-                    <li
-                      className="list-group-item"
-                      key={index}
-                    >
-                      {item.name}
-                      <i className="mr-2 ml-auto" onClick={() => removeListItem(currentList, item)} >&#x2716;</i>
-                    </li>
+                  <li
+                        className="list-group-item"
+                        key={index}
+                        >
+                    <div className="list row">
+                      <div className="col-md-10">
+                        
+                          {item.name}
+                      </div>
+                      <div className="col-md-2"><i onClick={() => removeListItem(currentList, item)} >&#x2716;</i></div>
+                    </div>
+                  </li>
+
                   ))}
               </ul>
           </div>
