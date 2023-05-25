@@ -97,7 +97,7 @@ const Lists: React.FC = () => {
                       key={index}
                     >
                       {item.name}
-                      <i onClick={() => removeListItem(currentList, item)} >&#x2716;</i>
+                      <i className="mr-2 ml-auto" onClick={() => removeListItem(currentList, item)} >&#x2716;</i>
                     </li>
                   ))}
               </ul>
