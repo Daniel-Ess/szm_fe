@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react'
+import { Routes, Route } from 'react-router-dom'
+// toastify
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+// mui
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+// views
+// import Add from './views/Add'
+// import Edit from './views/Edit'
+// import List from './views/List'
+import Lists from './views/Lists'
+import Items from './views/Items'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+	return (
+		<Container maxWidth="md">
+			<Box sx={{ my: 4 }}>
+				<Typography align="center" variant="h4" component="h1" gutterBottom>
+					Nákupný košík
+				</Typography>
+				<Routes>
+					<Route path="/" element={<Lists/>} />
+					<Route path="/lists" element={<Lists/>} />
+					<Route path="/lists/:id" element={<Items/>} />
+				</Routes>
+			</Box>
+			<ToastContainer />
+		</Container>
+	)
 }
-
-export default App;
